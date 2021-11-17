@@ -1,14 +1,13 @@
 const express = require('express');
 const http=require('http');
 const app = express();
+const port=process.env.PORT|| 3000;
 
 const path = require('path');
-console.log(__dirname + '/public');
+
 
 const loc = path.join(__dirname + '/public/html');
 app.use(express.static(loc))
-
-
 
 //route weather
 
@@ -20,6 +19,7 @@ app.get('/weather',(req,res)=>{
         })
     }
     const url = `http://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(req.query.address)}.json?access_token=pk.eyJ1Ijoicm9oaXRzYWNoMjciLCJhIjoiY2tvdmFidTN5MDZleTJ1cnMyc2NhcDN2dyJ9.H91adSv6_-b0dQhyVzv24A&limit=1;`;
+
     http.get(url,(response)=>{
 
         let data=[];
@@ -57,8 +57,8 @@ app.get('/weather',(req,res)=>{
 
 
 
-app.listen(3000, () => {
-    console.log('server is up and listening');
+app.listen(port, () => {
+    console.log(`server is up and listening at port ${port}`);
 
 })
 
